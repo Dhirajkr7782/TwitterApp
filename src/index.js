@@ -1,6 +1,9 @@
 // src/index.js
 import express from 'express';
 import morgan from 'morgan';
+import { PORT } from './config/serverConfig.js';
+// import tweetRouter from './routes/tweet.js';
+import apiRouter from './routes/apiRouter.js';
 
 const app = express();
 
@@ -23,8 +26,10 @@ const app = express();
 
 app.use(morgan('combined'));
 app.use(express.json());
+app.use('/api', apiRouter); // if request start with /api than pass through it other wise below
 
-// app.use(express.json()); it is use whan text is pass
+// app.use(express.text()); it is use whan text is pass
+
 
 
 
@@ -32,13 +37,20 @@ app.get('/ping', (req, res) => {
     return res.json({ message: 'pong' });
 });
 
+
+
 app.post('/hello', (req, res) => {
-    console.log("query params",req.query);//qury params
-    console.log("req body",req.body);//red body
+
+    console.log("query params", req.query);//qury params
+
+    console.log("req body", req.body);//red body
+
     return res.json({
         message: 'world'
     });
 });
+
+
 
 app.get('/tweets/:tweet_id', (req, res) => {
     console.log(req.params);
@@ -50,6 +62,6 @@ app.get('/tweets/:tweet_id', (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
