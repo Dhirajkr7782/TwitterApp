@@ -12,9 +12,9 @@ export const getTweetById = (req, res) => {
         });
     }
 
-export const createTweets=(req,res) =>{
-    return res.json({
+export const createTweet = (req,res) =>{
+        return res.json({
             message:'Welcome to the tweet route for creating',
             body:req.body
         });
-}
+    }
