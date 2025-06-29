@@ -1,24 +1,16 @@
-export const createTweetManualValidator = (req, res, next) =>{
-      const tweet = req.body?.tweet;
-
-    if(!tweet)
-    {
+export const createTweetManualValidator = (req, res, next) => {
+    if(!req.body.tweet) {
         return res.status(400).json({
             error: 'Tweet is required'
         });
     }
-   
 
+    if(req.body.tweet.length > 280) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: 'Tweet must be 280 characters or less',
+            success: false
+        });
+    }
 
-if(tweet.length > 20)
-{
-    return res.status(400).json(
-    {
-        error:'tweet must be 280 character or less'
-    });
-
-}
-
- next();
-
+    next();
 };
